@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './css/Content.css';
+
 
 class Content extends Component {
   constructor(){
@@ -17,27 +19,75 @@ class Content extends Component {
     this.handleSendData = this.handleSendData.bind(this);
   }
 
+  componentDidMount(){
+    /*var postData = {
+      email: "test@test.com",
+      password: "password"
+    };*/
+
+    let axiosConfig = {
+      headers: {
+          'X-Parse-Application-Id': 'ibrserver',
+          'X-Parse-Master-Key': 'Maranata2017$$',
+          'Content-Type': 'application/json;charset=UTF-8'
+      }
+    };
+
+    axios.get('https://ibrparseserver.herokuapp.com/parse/classes/Donations', axiosConfig)
+      .then(res => {
+        console.log(res.data);
+        //const persons = res.data;
+        //this.setState({ persons });
+      }
+    )
+  }
+
   handleChange(event) {
     if(event.target.name === "i_name"){
       this.setState({ name: event.target.value });
     }if(event.target.name === "i_lastname"){
       this.setState({ lastname: event.target.value });
     }if(event.target.name === "i_phone"){
-      this.setState({ phone: Number(event.target.value) });
+      this.setState({ phone: String(event.target.value) });
     }if(event.target.name === "i_cellphone"){
-      this.setState({ cellphone: Number(event.target.value) });
+      this.setState({ cellphone: String(event.target.value) });
     }if(event.target.name === "i_email"){
       this.setState({ email: event.target.value });
     }
   }
 
   handleSendData(){
-    alert('Your data is:\n' 
-    + this.state.name + "\n " 
-    + this.state.lastname + "\n"
-    + this.state.phone + "\n"
-    + this.state.cellphone + "\n"
-    + this.state.email );
+      console.log('Your data is:\n' 
+      + this.state.name + "\n" 
+      + this.state.lastname + "\n"
+      + this.state.phone + "\n"
+      + this.state.cellphone + "\n"
+      + this.state.email );
+
+      var postData = {
+        "name": this.state.name,
+        "lastname": this.state.lastname,
+        "phone": this.state.phone,
+        "cellphone": this.state.cellphone,
+        "email": this.state.email
+      }
+
+      let axiosConfig = {
+        headers: {
+            'X-Parse-Application-Id': 'ibrserver',
+            'X-Parse-Master-Key': 'Maranata2017$$',
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+      };
+
+      console.log("Payload: " + JSON.stringify(postData));
+
+      axios.post('https://ibrparseserver.herokuapp.com/parse/classes/Donations', postData, axiosConfig)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+
   }
 
   //Rendering JS
