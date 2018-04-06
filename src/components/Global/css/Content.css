@@ -17,3 +17,9 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+#rightGreen{
+  background-color: #00DB99;
+  border: 1px solid #00DB99;
+  color: white;
+}
