@@ -25,7 +25,7 @@ class Header extends Component {
           <div className="container py-5">
             <div className="row">
               <div className="col-md-12">
-                <h1 className="display-4 mb-0">Secondary overlay</h1>
+                <h1 className="display-4 mb-0">Iglesia Bautista Renacer</h1>
               </div>
             </div>
           </div>
