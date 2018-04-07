@@ -64,7 +64,10 @@ class Content extends Component {
     }if(event.target.name === "i_email"){
       this.setState({ email: event.target.value });
       console.log(event.target.value);
-    }if(event.target.name === "donation_value"){
+    }if(event.target.name === "i_donation_value"){
+      this.setState({ donation_value: event.target.value });
+      console.log(event.target.value);
+    }if(event.target.name === "i_donation_target"){
       this.setState({ donation_value: event.target.value });
       console.log(event.target.value);
     }
@@ -132,7 +135,7 @@ class Content extends Component {
               <div className="col-md-12 mb-3">
                   <p className="lead">Cantidad a donar</p>
                   <div className="input-group">
-                  <input type="number" class="form-control form-control-lg" name="donation_value" placeholder="20000" required="true" onChange={this.handleChange}></input>
+                  <input type="number" class="form-control form-control-lg" name="i_donation_value" placeholder="20000" required="true" onChange={this.handleChange}></input>
                     <div className="input-group-append">
                       <span class="input-group-text" id="rightGreen">$</span>
                     </div>
@@ -207,7 +210,7 @@ class Content extends Component {
                 <h4 class="mb-3"><b>Con mi donación quiero apoyar a:</b></h4>
                 <div class="d-block my-2">
 
-                  <select class="custom-select d-block w-100" name="i_dni_type" onChange={this.handleChange}>
+                  <select class="custom-select d-block w-100" name="i_donation_target" onChange={this.handleChange}>
                       <option value="">Choose...</option>
                       <option value="Ministerio">Ministerio</option>
                       <option value="Canasta de Amor">Canasta de Amor</option>
