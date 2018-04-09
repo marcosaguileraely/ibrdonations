@@ -6,11 +6,8 @@ import Header from './Global/Header';
 import Content from './Global/Content';
 import Footer from './Global/Footer';
 
-import 'font-awesome/css/font-awesome.min.css';
-
 // Assets
-/*import '../assets/css/font-awesome.min.css';
-import '../assets/css/fontawesome-webfont.eot';*/
+import 'font-awesome/css/font-awesome.min.css';
 
 //Data
 import items from '../data/menu-items';
