@@ -36,7 +36,7 @@ class Footer extends Component {
             <div class="collapse navbar-collapse text-center justify-content-end" id="navbarLightSupportedContent">
               <ul class="navbar-nav">
                 <li class="nav-item mx-1">
-                  <a class="nav-link" href="#"><i class="fa d-inline fa-facebook-square"></i>&nbsp; Facebook</a>
+                  <a class="nav-link" href="https://www.facebook.com/renacerib/" target="_blank" rel="noopener noreferrer"><i class="fa d-inline fa-facebook-square"></i>&nbsp; Facebook</a>
                 </li>
               </ul>
             </div>

@@ -15,11 +15,15 @@ class Content extends Component {
       dni_number: '',
       phone: '',
       email: '',
-      donation_value: ''
+      donation_value: 0,
+      fee_value: 900,
+      fee_value_percentage: 3.49,
+      total_donation: 0
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSendData = this.handleSendData.bind(this);
+    this.handleDonationCalculator = this.handleDonationCalculator.bind(this);
   }
 
   componentDidMount(){
@@ -49,24 +53,34 @@ class Content extends Component {
     if(event.target.name === "i_name"){
       this.setState({ name: event.target.value });
       console.log(event.target.value);
+
     }if(event.target.name === "i_lastname"){
       this.setState({ lastname: event.target.value });
       console.log(event.target.value);
+
     }if(event.target.name === "i_dni_type"){
       this.setState({ dni_type: event.target.value });
       console.log(event.target.value);
+
     }if(event.target.name === "i_dni_number"){
       this.setState({ dni_number: event.target.value });
       console.log(event.target.value);
+
     }if(event.target.name === "i_phone"){
       this.setState({ phone: event.target.value });
       console.log(event.target.value);
+
     }if(event.target.name === "i_email"){
       this.setState({ email: event.target.value });
       console.log(event.target.value);
+
     }if(event.target.name === "i_donation_value"){
-      this.setState({ donation_value: event.target.value });
+      this.setState({ 
+        donation_value: event.target.value 
+      });
       console.log(event.target.value);
+      this.handleDonationCalculator();
+      
     }if(event.target.name === "i_donation_target"){
       this.setState({ donation_value: event.target.value });
       console.log(event.target.value);
@@ -106,6 +120,13 @@ class Content extends Component {
       })
   }
 
+  handleDonationCalculator(){
+    this.setState({ 
+      total_donation: (this.state.donation_value + 100)/** this.state.fee_value_percentage + this.state.fee_value*/
+    });
+    console.log("===> " + this.state.total_donation);
+  }
+
   //Rendering JS
   render() {
     return (
@@ -135,7 +156,12 @@ class Content extends Component {
               <div className="col-md-12 mb-3">
                   <p className="lead">Cantidad a donar</p>
                   <div className="input-group">
-                  <input type="number" class="form-control form-control-lg" name="i_donation_value" placeholder="20000" required="true" onChange={this.handleChange}></input>
+                  <input type="number" 
+                         className="form-control form-control-lg" 
+                         name="i_donation_value" 
+                         placeholder="20000"
+                         min="0" 
+                         required="true" onChange={this.handleChange}></input>
                     <div className="input-group-append">
                       <span class="input-group-text" id="rightGreen">$</span>
                     </div>
@@ -170,11 +196,11 @@ class Content extends Component {
               <form class="needs-validation" noValidate="">
                 <div class="row">
                   <div class="col-md-6 mb-3"> <label htmlFor="i_name">Nombres</label>
-                    <input type="text" class="form-control" name="i_name" id="i_name" placeholder="John" onChange={this.handleChange}></input>
+                    <input type="text" class="form-control" name="i_name" id="i_name" placeholder="" onChange={this.handleChange}></input>
                     <div class="invalid-feedback"> Ingrese nombre(s) </div>
                   </div>
                   <div class="col-md-6 mb-3"> <label htmlFor="i_lastname">Apellidos</label>
-                    <input type="text" class="form-control" name="i_lastname" placeholder="Doe" onChange={this.handleChange}></input>
+                    <input type="text" class="form-control" name="i_lastname" placeholder="" onChange={this.handleChange}></input>
                     <div class="invalid-feedback"> Ingrese apellido(s) </div>
                   </div>
                 </div>
@@ -195,7 +221,7 @@ class Content extends Component {
                   </div>
                 </div>
                 <div class="mb-3"> <label htmlFor="i_phone">No. teléfono móvil</label>
-                    <input type="tel" class="form-control" name="i_phone" placeholder="321 111 111" onChange={this.handleChange}></input>
+                    <input type="tel" class="form-control" name="i_phone" placeholder="" onChange={this.handleChange}></input>
                     <div class="invalid-feedback"> Ingrese número de telefono móvil </div>
                 </div>
                 <div class="mb-3"> <label htmlFor="i_email">Correo electrónico</label>
@@ -222,55 +248,7 @@ class Content extends Component {
               </form>
             </div>
           </div>
-      </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      {/*}  <h2>Get Data From WerService</h2>
-        <label>
-            Name:
-            <input type="text" name="i_name" onChange={this.handleChange} />
-        </label>
-        <br/>
-        <label>
-            Last Name:
-            <input type="text" name="i_lastname" onChange={this.handleChange} />
-        </label>
-        <br/>
-        <label>
-            Phone:
-            <input type="number" name="i_phone" onChange={this.handleChange} />
-        </label>
-        <br/>
-        <label>
-            Cellphone
-            <input type="number" name="i_cellphone" onChange={this.handleChange} />
-        </label>
-        <br/>
-        <label>
-            Email:
-            <input type="text" name="i_email" onChange={this.handleChange} />
-        </label>
-        <br/>
-
-        <button id="result" onClick={this.handleSendData}>Action Data</button>
-    {this.state.result} */}
+        </div>
       </div>
     );
   }
