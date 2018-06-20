@@ -131,7 +131,7 @@ class Content extends Component {
   render() {
     return (
       <div className="Content">
-        <div className="py-2">
+        <div className="py-1">
           <div className="container">
             <div className="row">
               <div className="col-md-12">
@@ -140,7 +140,7 @@ class Content extends Component {
             </div>
             <div className="row">
               <div className="col-12 col-md-12">
-                <hr className="mb-4"></hr>
+                <hr className="mb-1"></hr>
               </div>
             </div>
           </div>
@@ -192,56 +192,61 @@ class Content extends Component {
             </div>
 
             <div class="col-md-8 order-md-1">
-              <h4 class="mb-3"><b>Información del Donante</b></h4>
+              <h4 class="mb-2"><b>Información del Donante</b></h4>
               <form class="needs-validation" noValidate="">
+                
                 <div class="row">
-                  <div class="col-md-6 mb-3"> <label htmlFor="i_name">Nombres</label>
+                  <div class="col-md-6 mb-2"> <label htmlFor="i_name">Nombres</label>
                     <input type="text" class="form-control" name="i_name" id="i_name" placeholder="" onChange={this.handleChange}></input>
                     <div class="invalid-feedback"> Ingrese nombre(s) </div>
                   </div>
-                  <div class="col-md-6 mb-3"> <label htmlFor="i_lastname">Apellidos</label>
+
+                  <div class="col-md-6 mb-2"> <label htmlFor="i_lastname">Apellidos</label>
                     <input type="text" class="form-control" name="i_lastname" placeholder="" onChange={this.handleChange}></input>
                     <div class="invalid-feedback"> Ingrese apellido(s) </div>
                   </div>
                 </div>
+
                 <div class="row">
-                  <div class="col-md-6 mb-3"> <label htmlFor="i_dni_type">Tipo de Identificación</label> 
+                  <div class="col-md-6 mb-2"> <label htmlFor="i_dni_type">Tipo de Identificación</label> 
                   <select class="custom-select d-block w-100" name="i_dni_type" onChange={this.handleChange}>
-                      <option value="">Choose...</option>
-                      <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
+                      <option selected="true" value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
                       <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
                       <option value="Cédula de Extranjería">Cédula de Extranjería</option>
                       <option value="Pasaporte">Pasaporte</option>
                     </select>
                     <div class="invalid-feedback"> Seleccione un tipo de identificación </div>
                   </div>
-                  <div class="col-md-6 mb-3"> <label htmlFor="i_dni_number">No. Identificación</label>
+                  <div class="col-md-6 mb-2"> <label htmlFor="i_dni_number">No. Identificación</label>
                     <input type="text" class="form-control" name="i_dni_number" onChange={this.handleChange}></input>
                     <div class="invalid-feedback"> Ingrese No. identificación </div>
                   </div>
                 </div>
-                <div class="mb-3"> <label htmlFor="i_phone">No. teléfono móvil</label>
+
+                <div class="mb-2"> <label htmlFor="i_phone">No. teléfono móvil</label>
                     <input type="tel" class="form-control" name="i_phone" placeholder="" onChange={this.handleChange}></input>
                     <div class="invalid-feedback"> Ingrese número de telefono móvil </div>
                 </div>
-                <div class="mb-3"> <label htmlFor="i_email">Correo electrónico</label>
+
+                <div class="mb-2"> <label htmlFor="i_email">Correo electrónico</label>
                   <input type="email" class="form-control" name="i_email" placeholder="johndoe@email.com" onChange={this.handleChange}></input>
                   <div class="invalid-feedback"> Please enter a valid email address. </div>
                 </div>
-                <div class="mb-3"> <label htmlFor="i_address">Dirección de dominicilio</label>
+                
+                <div class="mb-2"> <label htmlFor="i_address">Dirección de dominicilio</label>
                   <input type="text" class="form-control" name="i_address" placeholder="Cll 301 #45-33 Apto 10001 Blq 45" onChange={this.handleChange}></input>
                   <div class="invalid-feedback"> Ingrese dirección de domicilio </div>
                 </div>
                 
-                <h4 class="mb-3"><b>Con mi donación quiero apoyar a:</b></h4>
+                <h4 class="mb-2"><b>Con mi donación quiero apoyar a:</b></h4>
+
                 <div class="d-block my-2">
 
                   <select class="custom-select d-block w-100" name="i_donation_target" onChange={this.handleChange}>
-                      <option value="">Choose...</option>
-                      <option value="Ministerio">Ministerio</option>
+                      <option selected="true" value="Ministerio">Ministerio</option>
                       <option value="Canasta de Amor">Canasta de Amor</option>
                       <option value="Misiones">Misiones</option>
-                    </select>
+                  </select>
                 
                 </div>
                 <hr class="mb-4"></hr>
