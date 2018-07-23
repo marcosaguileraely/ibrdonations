@@ -1,8 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './components/App';
+import { render } from 'react-dom';
+
+//import App from './components/App';
+import { BrowserRouter as Router } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// Router
+import AppRoutes from './routes'
+
+// Assets
+import './index.css';
+
+render(
+    <Router>
+        <AppRoutes />
+    </Router>, 
+    document.getElementById('root')
+);
 registerServiceWorker();
+
+{/* ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker(); */}
