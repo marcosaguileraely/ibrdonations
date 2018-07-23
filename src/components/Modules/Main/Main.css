@@ -1,0 +1,42 @@
+#cursorPointer{
+    cursor: pointer !important;
+}
+
+#modalWindow {
+    max-width: 880px !important;
+}
+
+#img_rounded{
+    margin: 0% 17%;
+    padding: 22px !important;
+}
+
+#p-custom{
+    font-size: 1.0rem;
+}
+
+.App-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+  }
+  
+  .App-title {
+    font-size: 1.5em;
+  }
+  
+  .App-intro {
+    font-size: large;
+  }
+  
+  @keyframes App-logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  #rightGreen{
+    background-color: #00DB99;
+    border: 1px solid #00DB99;
+    color: white;
+  }

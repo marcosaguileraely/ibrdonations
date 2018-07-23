@@ -8,12 +8,23 @@ import Footer from './Global/Footer';
 
 // Assets
 import 'font-awesome/css/font-awesome.min.css';
+import PropType from 'prop-types';
 
 //Data
 import items from '../data/menu-items';
 
 class App extends Component {
+
+  static propTypes = {
+    children : PropType.object.isRequired
+  }
+
   render() {
+
+    const { children } = this.props;
+    console.log("Here props: ");
+    console.log(this.props);
+
     return (
       <div className="App">
         <Header 
@@ -21,7 +32,7 @@ class App extends Component {
             items={items}
         />
         
-        <Content />
+        <Content body={children} />
         
         <Footer 
             copyright= "&copy; Iglesia Bautista Renacer 2018"
