@@ -11,25 +11,34 @@ class Resumen extends Component {
 
   nextPath = () => {
       console.log(this.props);
-      this.props.history.push('/login');
+      this.props.history.push('');
   }
 
   render() {
     return (
       <div className="Resumen">
-        <div className="jumbotron jumbotron-fluid bg-white text-dark">
-          <div>
-            <center>
-              <h1 className="display-2">¯\_(ツ)_/¯</h1>
-              {/*<h1 className="display-2">🖖</h1>*/}
-              <h1>Resumen</h1>
-              <h3 className="display-5 py-3">Ups! something went wrong. Let me help you.</h3>
-              <button type="button" 
-                      className="btn btn-lg btn-outline-primary"
-                      onClick={this.nextPath}>¡Yeah! Take out here.</button>
-            </center>
+        <main>
+          <div className="album py-3 bg-light" >
+            <div className="container">
+              <div className="row">
+                <div className="col-md-1">
+                </div>
+                <div className="col-md-10">
+                  <div class="card">
+                      <h5 class="card-header">Resumen de la donación</h5>
+                      <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                      </div>
+                  </div>
+                </div>
+                <div className="col-md-1">
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     );
   }
