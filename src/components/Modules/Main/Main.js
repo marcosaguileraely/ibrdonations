@@ -143,13 +143,15 @@ class Content extends Component {
           <div className="row">
             <div className="col-md-4 order-md-2">
               
-              <h5 className="d-flex mb-3 justify-content-left">
-                <b>Detalles de la donación</b>
-              </h5>
-
-              <div className="col-md-12 mb-3">
-                  <p className="lead">Cantidad a donar</p>
-                  <div className="input-group">
+            <div class="card">
+              <div class="card-header">
+                <p id="ptitle-card">
+                  <b>Detalles de la donación</b>
+                </p>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Cantidad a donar</h5>
+                <div className="input-group">
                   <input type="text" 
                          className="form-control form-control-lg" 
                          name="i_donation_value" 
@@ -159,9 +161,19 @@ class Content extends Component {
                     <div className="input-group-append">
                       <span className="input-group-text" id="rightGreen">$</span>
                     </div>
-                  </div>
-                  <label htmlFor="donation_value">Ingrese la cantidad a donar. Por favor no ingrese comas ni puntos.&nbsp;</label>
+                </div>
+                <div class="alert alert-secondary" id="alert-message">
+                    Por favor ingrese la cantidad a donar, sin comas o puntos
+                </div>
               </div>
+              <div class="card-footer">
+                  <button 
+                    className="btn btn-lg btn-block btn-secondary" 
+                    type="submit"
+                    onClick={this.nextPath}>Donar
+                  </button>
+              </div>
+            </div>
 
               {/*<ul className="list-group">
                   <li className="list-group-item d-flex justify-content-between">
@@ -178,12 +190,6 @@ class Content extends Component {
                     <span>Total</span> <b>$1205900</b>
                   </li>
                 </ul>*/}
-
-              <hr></hr>
-              <button 
-                className="btn btn-lg btn-block btn-secondary" 
-                type="submit"
-                onClick={this.nextPath}>Donar</button>
 
             </div>
 

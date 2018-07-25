@@ -40,3 +40,20 @@
     border: 1px solid #00DB99;
     color: white;
   }
+
+  #ptitle-card{
+    margin-bottom: 0px !important;
+    font-size: 1.25rem;
+    font-weight: bolder;
+  }
+
+  #alert-message {
+    font-size: 0.75rem;
+    margin-top: 5px;
+    padding: 4px 5px 4px 9px;
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+  }
+
+
