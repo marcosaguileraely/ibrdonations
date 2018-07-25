@@ -30,7 +30,7 @@ class Content extends Component {
 
   nextPath = () => {
       console.log(this.props);
-      this.props.history.push('/resume');
+      this.props.history.push('/donationresumen');
   }
 
   componentDidMount(){
@@ -138,27 +138,14 @@ class Content extends Component {
   render() {
     return (
       <div className="Content">
-        <div className="py-1">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <h2>Formulario para donaciones</h2>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-12 col-md-12">
-                <hr className="mb-1"></hr>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className="py-1" />
         <div className="container">
           <div className="row">
             <div className="col-md-4 order-md-2">
               
-              <h4 className="d-flex mb-3 justify-content-center">
+              <h5 className="d-flex mb-3 justify-content-left">
                 <b>Detalles de la donación</b>
-              </h4>
+              </h5>
 
               <div className="col-md-12 mb-3">
                   <p className="lead">Cantidad a donar</p>
@@ -196,12 +183,12 @@ class Content extends Component {
               <button 
                 className="btn btn-lg btn-block btn-secondary" 
                 type="submit"
-                onClick={this.nextPath}>Continuar con el pago</button>
+                onClick={this.nextPath}>Donar</button>
 
             </div>
 
             <div className="col-md-8 order-md-1">
-              <h4 className="mb-2"><b>Información del donante</b></h4>
+              <h5 className="mb-2"><b>Información del donante</b></h5>
               <form className="needs-validation" noValidate="">
                 
                 <div className="row">
@@ -217,7 +204,7 @@ class Content extends Component {
                 </div>
 
                 <div className="row">
-                  <div className="col-md-6 mb-2"> <label htmlFor="i_dni_type">Tipo de Identificación</label> 
+                  <div className="col-md-6 mb-2"> <label htmlFor="i_dni_type">Tipo de identificación</label> 
                   <select className="custom-select d-block w-100" name="i_dni_type" onChange={this.handleChange}>
                       <option defaultValue="true" value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
                       <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
@@ -225,7 +212,7 @@ class Content extends Component {
                       <option value="Pasaporte">Pasaporte</option>
                     </select>
                   </div>
-                  <div className="col-md-6 mb-2"> <label htmlFor="i_dni_number">No. Identificación</label>
+                  <div className="col-md-6 mb-2"> <label htmlFor="i_dni_number">No. identificación</label>
                     <input autoComplete='given-name' type="text" className="form-control" name="i_dni_number" onChange={this.handleChange}></input>
                   </div>
                 </div>
@@ -240,12 +227,12 @@ class Content extends Component {
                   <div className="invalid-feedback"> Please enter a valid email address. </div>
                 </div>
                 
-                <div className="mb-2"> <label htmlFor="i_address">Dirección de dominicilio</label>
+                <div className="mb-2"> <label htmlFor="i_address">Dirección</label>
                   <input autoComplete='given-name' type="text" className="form-control" name="i_address" onChange={this.handleChange}></input>
                   <div className="invalid-feedback"> Ingrese dirección de domicilio </div>
                 </div>
                 
-                <h4 className="mb-2"><b>Con mi donación quiero apoyar a:</b></h4>
+                <h5 className="mb-2"><b>Con mi donación quiero apoyar a:</b></h5>
 
                 <div className="d-block my-2">
 
