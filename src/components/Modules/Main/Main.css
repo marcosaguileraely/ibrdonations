@@ -56,4 +56,27 @@
     border-color: #b8daff;
   }
 
+  #custom-header {
+    background-color: #00DB99 !important;
+    border-bottom: 1px solid #00DB99;
+    height: 140px !important;
+  }
+
+  .in-middle{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  #subtitle-custom{
+    margin-top: 7%;
+    margin-bottom: 0rem;
+    color: white;
+    font-weight: bolder;
+  }
+
+  #bible-text {
+    font-size: small;
+  }
+
 

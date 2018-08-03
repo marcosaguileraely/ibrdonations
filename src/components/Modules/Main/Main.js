@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Row,
+  Col,
+  Card,
+  CardTitle,
+  CardText,
+  CardImg,
+  CardBody,
+  CardHeader,
+  CardFooter
+} from 'reactstrap';
 
-//import css & js libraries
+//import css & js libraries4
 import './Main.css';
 
 class Content extends Component {
@@ -18,19 +34,30 @@ class Content extends Component {
       donation_value: 0,
       fee_value: 900,
       fee_value_percentage: 3.49,
-      total_donation: 0
+      total_donation: 0,
+
+      //UI/UX states
+      modal: false
     };
 
     this.handleChange             = this.handleChange.bind(this);
     this.handleSendData           = this.handleSendData.bind(this);
     this.handleDonationCalculator = this.handleDonationCalculator.bind(this);
     this.nextPath                 = this.nextPath.bind(this);
+    this.toggle                   = this.toggle.bind(this);
 
   }
 
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
   nextPath = () => {
-      console.log(this.props);
-      this.props.history.push('/donationresumen');
+      this.toggle();
+      //console.log(this.props);
+      //this.props.history.push('/donationresumen');
   }
 
   componentDidMount(){
@@ -191,6 +218,45 @@ class Content extends Component {
                   </li>
                 </ul>*/}
 
+            </div>
+            
+            <div>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">  
+                  <ModalHeader toggle={this.toggle}>Resumen de la Donación</ModalHeader>
+                  <ModalBody>
+                    <Row>
+                      <Col xs="6">
+                        <Card>
+                          <CardHeader id="custom-header" > 
+                            <center>
+                              <p id="subtitle-custom">Total Donación</p>
+                              <h1 style={{ fontSize : '2.8rem', color : 'white' }}>$100.000</h1>
+                            </center>
+                          </CardHeader>    
+                          <CardBody>
+                            <CardTitle>¡Gracias por tu aporte!</CardTitle>
+                            <blockquote class="blockquote">
+                              <p id="bible-text">
+                                  "Y Dios puede hacer que toda gracia abunde para ustedes, de manera que siempre, en toda circunstancia, tengan todo lo necesario, y toda buena obra abunde en ustedes." 
+                              </p>
+                              <footer class="blockquote-footer"><cite title="Source Title">(2 Corintios 9:8 | NVI)</cite></footer>
+                            </blockquote>
+                            <CardText></CardText>
+                          </CardBody>
+                          <CardFooter>
+                            <Button color="link" onClick={this.toggle} block>Regresar</Button>
+                          </CardFooter>
+                        </Card>
+                      </Col>
+                      <Col xs="6">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</Col>
+                    </Row>
+                  </ModalBody>
+                  <ModalFooter>
+                    
+                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                  </ModalFooter>
+                </Modal>
             </div>
 
             <div className="col-md-8 order-md-1">
