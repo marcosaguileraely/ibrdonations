@@ -147,7 +147,7 @@ class Content extends Component {
     var date = today.getFullYear() +""+ (today.getMonth() + 1) +""+ today.getDate();
     var time = + today.getHours() +""+ today.getMinutes();
     //var time = + today.getHours();
-    var referenceCode = "IBRDON" + inDatum +"-"+ date + "" + time;
+    var referenceCode = "IBR" + inDatum +"-"+ date + "" + time;
     console.log("======> " + referenceCode);
 
     this.setState({
@@ -449,7 +449,7 @@ class Content extends Component {
                   </button>
               </div>
               <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="TooltipExample" toggle={this.toggleToolTip}>
-                Hello world!
+                ¡Clic para iniciar el pago!
               </Tooltip>
             </div>
 
@@ -505,7 +505,7 @@ class Content extends Component {
                           <Table borderless style={{ borderColor: 'white' }}>
                               <thead>
                                 <tr>
-                                  <th className="th-non-border" scope="col"><CardTitle><center><h4>Detalles de la donación</h4></center></CardTitle></th>
+                                  <th className="th-non-border" scope="col"><CardTitle><center><h4>Detalles de la Donación</h4></center></CardTitle></th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -520,6 +520,9 @@ class Content extends Component {
                                 </tr>
                                 <tr>
                                   <td className="th-non-border">{this.state.email}</td>
+                                </tr>
+                                <tr>
+                                  <td className="th-non-border">{this.state.address}</td>
                                 </tr>
                                 <tr>
                                   <td className="th-non-border">Donar a: {this.state.donation_target}</td>
@@ -579,12 +582,12 @@ class Content extends Component {
                     </select>
                   </div>
                   <div className="col-md-6 mb-2"> <label htmlFor="i_dni_number">No. identificación</label>
-                    <input autoComplete='given-name' type="number" className="form-control" name="i_dni_number" onChange={this.handleChange}></input>
+                    <input autoComplete='given-name' type="text" className="form-control" name="i_dni_number" onChange={this.handleChange}></input>
                   </div>
                 </div>
 
                 <div className="mb-2"> <label htmlFor="i_phone">No. teléfono móvil</label>
-                    <input autoComplete='given-name' type="number" className="form-control" name="i_phone" placeholder="" onChange={this.handleChange}></input>
+                    <input autoComplete='given-name' type="tel" className="form-control" name="i_phone" placeholder="" onChange={this.handleChange}></input>
                 </div>
 
                 <div className="mb-2"> <label htmlFor="i_email">Correo electrónico</label>
@@ -601,7 +604,7 @@ class Content extends Component {
 
                   <select className="custom-select d-block w-100" name="i_donation_target" onChange={this.handleChange}>
                       <option defaultValue="true" value="Misiones Ambalema">Misiones Ambalema</option>
-                      <option value="Ministerio">Ministerio Hombres</option>
+                      <option value="Ministerio Hombres">Ministerio Hombres</option>
                       <option value="Canasta de Amor">Ministerio Parejas</option>
                       <option value="Canasta de Amor">Canasta de Amor</option>
                   </select>
