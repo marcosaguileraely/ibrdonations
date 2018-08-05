@@ -28,7 +28,7 @@ class Footer extends Component {
         <nav className="navbar navbar-expand-md my-3 navbar-light bg-light" id="footer_bar">
           <div className="container">
             <a className="navbar-brand" href="http://renacerib.org" target="_blank" rel="noopener noreferrer">
-                <i className="fa d-inline fa-home"></i><b>&nbsp;renaceribr.org </b>
+                <i className="fa d-inline fa-home"></i><b>&nbsp;www.renacerib.org </b>
             </a>
                 <i className="fa d-inline fa-phone-square"></i><b>&nbsp;Tel:  (+571) 5268021 </b>
             <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarLightSupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation">
