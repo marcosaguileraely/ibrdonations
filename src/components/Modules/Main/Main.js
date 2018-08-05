@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import NumberFormat from 'react-number-format';
 import {
   Button,
   Modal,
@@ -11,10 +12,11 @@ import {
   Card,
   CardTitle,
   CardText,
-  CardImg,
+  Table,
   CardBody,
   CardHeader,
-  CardFooter
+  CardFooter,
+  Tooltip
 } from 'reactstrap';
 
 //import css & js libraries4
@@ -24,28 +26,42 @@ class Content extends Component {
   constructor(){
     super();
 
-    this.state = {
-      name: '',
-      lastname: '',
-      dni_type: '',
-      dni_number: '',
-      phone: '',
-      email: '',
-      donation_value: 0,
-      fee_value: 900,
-      fee_value_percentage: 3.49,
-      total_donation: 0,
-
-      //UI/UX states
-      modal: false
-    };
-
     this.handleChange             = this.handleChange.bind(this);
     this.handleSendData           = this.handleSendData.bind(this);
     this.handleDonationCalculator = this.handleDonationCalculator.bind(this);
     this.nextPath                 = this.nextPath.bind(this);
     this.toggle                   = this.toggle.bind(this);
+    this.toggleToolTip            = this.toggleToolTip.bind(this);
+    this.toggleEnablePaymentButton= this.toggleEnablePaymentButton.bind(this);
 
+    this.state = {
+      name           : '',
+      lastname       : '',
+      dni_type       : 'Cédula de Ciudadanía',
+      dni_number     : '',
+      phone          : '',
+      email          : '',
+      donation_value : 0,
+      donation_target: '',
+      fee_value      : 900,
+      fee_value_percentage: 3.49,
+      total_donation : 0,
+
+      //UI/UX states
+      modal: false,
+      tooltipOpen: false,
+      isPayButtonDisabled  : true,
+
+      // Form UI Filled?
+      isFilledName         : false,
+      isFilledLastName     : false,
+      isFilledDniType      : false,
+      isFilledDni          : false,
+      isFilledEmail        : false,
+      isFilledPhone        : false,
+      isFilledValue        : false,
+      isFilledTarget       : false
+    };
   }
 
   toggle() {
@@ -53,6 +69,43 @@ class Content extends Component {
       modal: !this.state.modal
     });
   }
+
+  toggleToolTip() {
+    this.setState({
+      tooltipOpen: !this.state.tooltipOpen
+    });
+  }
+
+  toggleEnablePaymentButton = () =>{
+    console.log("Name " + this.state.isFilledName +
+                " \nLast Name " + this.state.isFilledLastName +
+                " \nDni type " + this.state.isFilledDniType +
+                " \nDni " + this.state.isFilledDni +
+                " \nEmail: " + this.state.isFilledEmail + 
+                " \nPhone: " + this.state.isFilledPhone + 
+                " \nValue: " + this.state.isFilledValue + 
+                " \nTarget: " + this.state.isFilledTarget);
+                     
+    if(    this.state.isFilledName === true
+        && this.state.isFilledLastName === true
+        && this.state.isFilledDniType === true 
+        && this.state.isFilledDni === true 
+        && this.state.isFilledEmail === true 
+        && this.state.isFilledPhone === true 
+        && this.state.isFilledValue === true 
+        && this.state.isFilledTarget === true 
+        && this.state.isFilledPhone === true ){
+        
+        this.setState({
+          isPayButtonDisabled : false
+        })  
+
+    }else{
+        this.setState({
+          isPayButtonDisabled : true
+        })
+    }
+}
 
   nextPath = () => {
       this.toggle();
@@ -84,40 +137,168 @@ class Content extends Component {
   }
 
   handleChange(event) {
-    if(event.target.name === "i_name"){
-      this.setState({ name: event.target.value });
-      console.log(event.target.value);
 
+    if(event.target.name === "i_name"){
+      this.setState({ 
+        name: String(event.target.value)
+      }, () => {
+        console.log(this.state.name)
+        if(this.state.name.length > 0){
+            this.setState({
+              isFilledName: true
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }else{
+            this.setState({
+              isFilledName: false
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }
+      });
+      
     }if(event.target.name === "i_lastname"){
-      this.setState({ lastname: event.target.value });
-      console.log(event.target.value);
+      this.setState({ 
+        lastname: event.target.value 
+      }, () => {
+        console.log(this.state.lastname)
+        if(this.state.lastname.length > 0){
+            this.setState({
+              isFilledLastName: true
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }else{
+            this.setState({
+              isFilledLastName: false
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }
+      });
 
     }if(event.target.name === "i_dni_type"){
-      this.setState({ dni_type: event.target.value });
-      console.log(event.target.value);
+      this.setState({ 
+        dni_type: event.target.value 
+      }, () => {
+        console.log(this.state.dni_type)
+        if(this.state.dni_type.length > 0){
+            this.setState({
+              isFilledDniType: true
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }else{
+            this.setState({
+              isFilledDniType: false
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }
+      });
 
     }if(event.target.name === "i_dni_number"){
-      this.setState({ dni_number: event.target.value });
-      console.log(event.target.value);
+      this.setState({ 
+        dni_number: event.target.value 
+      }, () => {
+        console.log(this.state.dni_number)
+        if(this.state.dni_number.length > 0){
+            this.setState({
+              isFilledDni: true
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }else{
+            this.setState({
+              isFilledDni: false
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }
+      });
 
     }if(event.target.name === "i_phone"){
-      this.setState({ phone: event.target.value });
-      console.log(event.target.value);
+      this.setState({ 
+        phone: event.target.value 
+      }, () => {
+        console.log(this.state.phone)
+        if(this.state.phone.length > 0){
+            this.setState({
+              isFilledPhone: true
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }else{
+            this.setState({
+              isFilledPhone: false
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }
+      });
 
     }if(event.target.name === "i_email"){
-      this.setState({ email: event.target.value });
-      console.log(event.target.value);
+      this.setState({ 
+        email: event.target.value 
+      }, () => {
+        console.log(this.state.email)
+        if(this.state.email.length > 0){
+            this.setState({
+              isFilledEmail: true
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }else{
+            this.setState({
+              isFilledEmail: false
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }
+      });
 
     }if(event.target.name === "i_donation_value"){
       this.setState({ 
         donation_value: event.target.value 
+      }, () => {
+        console.log(this.state.donation_value)
+        if(this.state.donation_value.length > 0){
+            this.setState({
+              isFilledValue: true
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }else{
+            this.setState({
+              isFilledValue: false
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }
       });
-      console.log(event.target.value);
-      this.handleDonationCalculator();
-      
+      //console.log(event.target.value);
+      //this.handleDonationCalculator();
+
     }if(event.target.name === "i_donation_target"){
-      this.setState({ donation_value: event.target.value });
-      console.log(event.target.value);
+      this.setState({ 
+        donation_target: event.target.value 
+      }, () => {
+        console.log(this.state.donation_target)
+        if(this.state.donation_target.length > 0){
+            this.setState({
+              isFilledTarget: true
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }else{
+            this.setState({
+              isFilledTarget: false
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }
+      });
     }
   }
 
@@ -182,7 +363,6 @@ class Content extends Component {
                   <input type="text" 
                          className="form-control form-control-lg" 
                          name="i_donation_value" 
-                         placeholder="20000"
                          min="0" 
                          required="true" onChange={this.handleChange}></input>
                     <div className="input-group-append">
@@ -194,12 +374,17 @@ class Content extends Component {
                 </div>
               </div>
               <div class="card-footer">
-                  <button 
+                  <button
+                    id="TooltipExample"
+                    disabled={this.state.isPayButtonDisabled}
                     className="btn btn-lg btn-block btn-secondary" 
                     type="submit"
                     onClick={this.nextPath}>Donar
                   </button>
               </div>
+              <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="TooltipExample" toggle={this.toggleToolTip}>
+                Hello world!
+              </Tooltip>
             </div>
 
               {/*<ul className="list-group">
@@ -222,15 +407,16 @@ class Content extends Component {
             
             <div>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">  
-                  <ModalHeader toggle={this.toggle}>Resumen de la Donación</ModalHeader>
                   <ModalBody>
                     <Row>
-                      <Col xs="6">
-                        <Card>
+                      <Col id="custom-left-card" className="py-2" xs="6">
+                        <Card id="left-card">
                           <CardHeader id="custom-header" > 
                             <center>
                               <p id="subtitle-custom">Total Donación</p>
-                              <h1 style={{ fontSize : '2.8rem', color : 'white' }}>$100.000</h1>
+                              <h1 style={{ fontSize : '2.8rem', color : 'white' }}>
+                                <NumberFormat value={this.state.donation_value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                              </h1>
                             </center>
                           </CardHeader>    
                           <CardBody>
@@ -241,21 +427,46 @@ class Content extends Component {
                               </p>
                               <footer class="blockquote-footer"><cite title="Source Title">(2 Corintios 9:8 | NVI)</cite></footer>
                             </blockquote>
-                            <CardText></CardText>
                           </CardBody>
-                          <CardFooter>
-                            <Button color="link" onClick={this.toggle} block>Regresar</Button>
+                          <CardFooter id="card-footer-non-radius">
+                            <Button  size="sm" color="link" onClick={this.toggle} block>Regresar</Button>
                           </CardFooter>
                         </Card>
                       </Col>
-                      <Col xs="6">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</Col>
+                      <Col id="custom-right-card" xs="6">
+                      <Card>
+                          <CardBody>  
+                          <Table borderless style={{ borderColor: 'white' }}>
+                              <thead>
+                                <tr>
+                                  <th className="th-non-border" scope="col"><CardTitle><center><h4>Detalles de la donación</h4></center></CardTitle></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td className="th-non-border">{this.state.name} {this.state.lastname}</td>
+                                </tr>
+                                <tr>
+                                  <td className="th-non-border">{this.state.dni_type} : {this.state.dni_number}</td>
+                                </tr>
+                                <tr>
+                                  <td className="th-non-border">{this.state.phone}</td>
+                                </tr>
+                                <tr>
+                                  <td className="th-non-border">{this.state.email}</td>
+                                </tr>
+                                <tr>
+                                  <td className="th-non-border">Donar a: {this.state.donation_target}</td>
+                                </tr>
+                              </tbody>
+                            </Table>
+                            <hr className="py-1" style={{ borderTop: '0px solid rgba(0, 0, 0, 0.1)' }} />
+                            <Button size="lg" block>Confirmar y donar</Button>
+                          </CardBody>
+                        </Card>
+                      </Col>
                     </Row>
                   </ModalBody>
-                  <ModalFooter>
-                    
-                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                  </ModalFooter>
                 </Modal>
             </div>
 
