@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import NumberFormat from 'react-number-format';
+import md5gen from 'md5';
 import {
   Button,
   Modal,
@@ -26,23 +27,36 @@ class Content extends Component {
   constructor(){
     super();
 
-    this.handleChange             = this.handleChange.bind(this);
-    this.handleSendData           = this.handleSendData.bind(this);
-    this.handleDonationCalculator = this.handleDonationCalculator.bind(this);
-    this.nextPath                 = this.nextPath.bind(this);
-    this.toggle                   = this.toggle.bind(this);
-    this.toggleToolTip            = this.toggleToolTip.bind(this);
-    this.toggleEnablePaymentButton= this.toggleEnablePaymentButton.bind(this);
+    this.handleChange              = this.handleChange.bind(this);
+    this.handleSendData            = this.handleSendData.bind(this);
+    this.handleDonationCalculator  = this.handleDonationCalculator.bind(this);
+    this.nextPath                  = this.nextPath.bind(this);
+    this.toggle                    = this.toggle.bind(this);
+    this.toggleToolTip             = this.toggleToolTip.bind(this);
+    this.toggleEnablePaymentButton = this.toggleEnablePaymentButton.bind(this);
+    this.handleMd5Generator        = this.handleMd5Generator.bind(this);
+    this.handleReferencecode       = this.handleReferencecode.bind(this);
+
 
     this.state = {
+
+      // Form values
+      payuIdMerchant: '634695',
+
+      // PayU Parameter
+      monto            : 0,
+      codigoReferencia : '',
+      firmaMd5         : '',
+
       name           : '',
       lastname       : '',
       dni_type       : 'Cédula de Ciudadanía',
       dni_number     : '',
       phone          : '',
       email          : '',
+      address        : '',
       donation_value : 0,
-      donation_target: '',
+      donation_target: 'Misiones Ambalema',
       fee_value      : 900,
       fee_value_percentage: 3.49,
       total_donation : 0,
@@ -55,13 +69,33 @@ class Content extends Component {
       // Form UI Filled?
       isFilledName         : false,
       isFilledLastName     : false,
-      isFilledDniType      : false,
+      isFilledDniType      : true,
       isFilledDni          : false,
       isFilledEmail        : false,
+      isFilledAddr         : false,
       isFilledPhone        : false,
       isFilledValue        : false,
-      isFilledTarget       : false
+      isFilledTarget       : true
     };
+  }
+
+  componentDidMount(){
+  
+    let axiosConfig = {
+      headers: {
+          'X-Parse-Application-Id': 'ibrserver',
+          'X-Parse-Master-Key': 'Maranata2017$$',
+          'Content-Type': 'application/json;charset=UTF-8'
+      }
+    };
+
+    axios.get('https://ibrparseserver.herokuapp.com/parse/classes/Donations', axiosConfig)
+      .then(res => {
+        console.log(res.data);
+        //const persons = res.data;
+        //this.setState({ persons });
+      }
+    )
   }
 
   toggle() {
@@ -91,6 +125,7 @@ class Content extends Component {
         && this.state.isFilledDniType === true 
         && this.state.isFilledDni === true 
         && this.state.isFilledEmail === true 
+        && this.state.isFilledAddr === true 
         && this.state.isFilledPhone === true 
         && this.state.isFilledValue === true 
         && this.state.isFilledTarget === true 
@@ -105,35 +140,46 @@ class Content extends Component {
           isPayButtonDisabled : true
         })
     }
-}
+  }
+
+  handleReferencecode = (inDatum) =>{
+    var today = new Date();
+    var date = today.getFullYear() +""+ (today.getMonth() + 1) +""+ today.getDate();
+    var time = + today.getHours() +""+ today.getMinutes();
+    //var time = + today.getHours();
+    var referenceCode = "IBRDON" + inDatum +"-"+ date + "" + time;
+    console.log("======> " + referenceCode);
+
+    this.setState({
+      codigoReferencia: referenceCode
+    })
+
+    return referenceCode;
+  }
+
+  handleMd5Generator = () =>{
+    var referencecod = this.handleReferencecode(this.state.dni_number);
+    var monto_pagar = Math.round(this.state.donation_value);
+    
+    console.log("=====> " + referencecod + " --- " + monto_pagar);
+    
+    var md5string = md5gen( "lt0WPAs8Ac7i6NVhJG6SGTI2sU" + "~" + 
+                            "634695" + "~" +
+                            referencecod + "~" +
+                            monto_pagar + "~" +
+                            "COP" );
+    this.setState({
+      firmaMd5: md5string
+    }, () => {
+      console.log("MD5 =>" + md5string);
+    })
+  }
 
   nextPath = () => {
       this.toggle();
+      this.handleMd5Generator();
       //console.log(this.props);
       //this.props.history.push('/donationresumen');
-  }
-
-  componentDidMount(){
-    /*var postData = {
-      email: "test@test.com",
-      password: "password"
-    };*/
-
-    let axiosConfig = {
-      headers: {
-          'X-Parse-Application-Id': 'ibrserver',
-          'X-Parse-Master-Key': 'Maranata2017$$',
-          'Content-Type': 'application/json;charset=UTF-8'
-      }
-    };
-
-    axios.get('https://ibrparseserver.herokuapp.com/parse/classes/Donations', axiosConfig)
-      .then(res => {
-        console.log(res.data);
-        //const persons = res.data;
-        //this.setState({ persons });
-      }
-    )
   }
 
   handleChange(event) {
@@ -252,6 +298,26 @@ class Content extends Component {
         }else{
             this.setState({
               isFilledEmail: false
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }
+      });
+
+    }if(event.target.name === "i_address"){
+      this.setState({ 
+        address: String(event.target.value) 
+      }, () => {
+        console.log(this.state.address)
+        if(this.state.address.length > 0){
+            this.setState({
+              isFilledAddr: true
+            }, () => {
+              this.toggleEnablePaymentButton();
+            })
+        }else{
+            this.setState({
+              isFilledAddr: false
             }, () => {
               this.toggleEnablePaymentButton();
             })
@@ -461,7 +527,26 @@ class Content extends Component {
                               </tbody>
                             </Table>
                             <hr className="py-1" style={{ borderTop: '0px solid rgba(0, 0, 0, 0.1)' }} />
-                            <Button size="lg" block>Confirmar y donar</Button>
+                            {/*<Button size="lg" block>Confirmar y donar</Button>*/}
+                            {/*PayU form*/}
+                            <form method="post" action="https://checkout.payulatam.com/ppp-web-gateway-payu/" target="_blank">
+                              <input name="merchantId"       type="hidden"  value={this.state.payuIdMerchant} ></input>
+                              <input name="referenceCode"    type="hidden"  value={this.state.codigoReferencia} ></input>
+                              <input name="description"      type="hidden"  value="DONACION IBR" ></input>
+                              <input name="amount"           type="hidden"  value={Math.round(this.state.donation_value)} ></input>
+                              <input name="tax"              type="hidden"  value="0" ></input>
+                              <input name="taxReturnBase"    type="hidden"  value="0" ></input>
+                              <input name="signature"        type="hidden"  value={this.state.firmaMd5} ></input>
+                              <input name="accountId"        type="hidden"  value="637091" ></input>
+                              <input name="currency"         type="hidden"  value="COP" ></input>
+                              <input name="buyerFullName"    type="hidden"  value={this.state.name + " " + this.state.lastname} ></input>
+                              <input name="buyerEmail"       type="hidden"  value={this.state.email} ></input>
+                              <input name="shippingAddress"  type="hidden"  value={this.state.address} ></input>
+                              <input name="telephone"        type="hidden"  value={this.state.phone} ></input>
+                              <input name="shippingCountry"  type="hidden"  value="CO" ></input>
+                              {/*<input name="test" type="hidden" value="1" ></input>*/}
+                              <input name="Submit" size="lg" block type="submit"  value="Confirmar y donar" className="btn btn-secondary btn-lg btn-block" id="button_payu"></input>
+                            </form>
                           </CardBody>
                         </Card>
                       </Col>
@@ -477,12 +562,10 @@ class Content extends Component {
                 <div className="row">
                   <div className="col-md-6 mb-2"> <label htmlFor="i_name">Nombres</label>
                     <input autoComplete='given-name' type="text" className="form-control" name="i_name" id="i_name" placeholder="" onChange={this.handleChange}></input>
-                    <div className="invalid-feedback"> Ingrese nombre(s) </div>
                   </div>
 
                   <div className="col-md-6 mb-2"> <label htmlFor="i_lastname">Apellidos</label>
                     <input autoComplete='given-name' type="text" className="form-control" name="i_lastname" placeholder="" onChange={this.handleChange}></input>
-                    <div className="invalid-feedback"> Ingrese apellido(s) </div>
                   </div>
                 </div>
 
@@ -496,23 +579,20 @@ class Content extends Component {
                     </select>
                   </div>
                   <div className="col-md-6 mb-2"> <label htmlFor="i_dni_number">No. identificación</label>
-                    <input autoComplete='given-name' type="text" className="form-control" name="i_dni_number" onChange={this.handleChange}></input>
+                    <input autoComplete='given-name' type="number" className="form-control" name="i_dni_number" onChange={this.handleChange}></input>
                   </div>
                 </div>
 
                 <div className="mb-2"> <label htmlFor="i_phone">No. teléfono móvil</label>
-                    <input autoComplete='given-name' type="tel" className="form-control" name="i_phone" placeholder="" onChange={this.handleChange}></input>
-                    <div className="invalid-feedback"> Ingrese número de telefono móvil </div>
+                    <input autoComplete='given-name' type="number" className="form-control" name="i_phone" placeholder="" onChange={this.handleChange}></input>
                 </div>
 
                 <div className="mb-2"> <label htmlFor="i_email">Correo electrónico</label>
                   <input autoComplete='given-name' type="email" className="form-control" name="i_email" onChange={this.handleChange}></input>
-                  <div className="invalid-feedback"> Please enter a valid email address. </div>
                 </div>
                 
                 <div className="mb-2"> <label htmlFor="i_address">Dirección</label>
                   <input autoComplete='given-name' type="text" className="form-control" name="i_address" onChange={this.handleChange}></input>
-                  <div className="invalid-feedback"> Ingrese dirección de domicilio </div>
                 </div>
                 
                 <h5 className="mb-2"><b>Con mi donación quiero apoyar a:</b></h5>
@@ -520,9 +600,10 @@ class Content extends Component {
                 <div className="d-block my-2">
 
                   <select className="custom-select d-block w-100" name="i_donation_target" onChange={this.handleChange}>
-                      <option defaultValue="true" value="Ministerio">Ministerio</option>
+                      <option defaultValue="true" value="Misiones Ambalema">Misiones Ambalema</option>
+                      <option value="Ministerio">Ministerio Hombres</option>
+                      <option value="Canasta de Amor">Ministerio Parejas</option>
                       <option value="Canasta de Amor">Canasta de Amor</option>
-                      <option value="Misiones">Misiones</option>
                   </select>
                 
                 </div>
